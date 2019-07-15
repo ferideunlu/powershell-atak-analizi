@@ -11,7 +11,7 @@ Kibana - (6.4.1)<br>
 Sysmon - v8+<br>
 Powershell - v5+<br>
 
-# Need To Set
+# Settings Needed
 
 <b>GPO settings</b> <br><br>
 Go and type gpedit.msc on Powershell Commandline go Windows Powershell and turn on Module Logging, Powershell Script Block Logging.<br><br>
