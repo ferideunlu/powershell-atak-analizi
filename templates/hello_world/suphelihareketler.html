@@ -1,0 +1,112 @@
+{% extends 'hello_world/layout.html' %}
+
+{% block title %}Şüpheli Hareketler{% endblock %}
+
+{% block content %}
+<h3>Şüpheli Hareketler</h3>
+<hr>
+
+<form>
+    <div class="form-group" >
+        <div class="row">
+            <label for="date" class="label label-primary">Tarihi Seç</label>
+            <div class="col-md-2">
+                <input type="date" class="form-control">
+            </div>
+            <div class="col-md-2">
+                <select name="" id="" class="form-control">
+                    <option value="">Source Image</option>
+                    <option value="">Target Image</option>
+                    <option value="">Target Process ID</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-outline-primary" value="Filtrele">
+            </div>
+        </div>
+    </div>
+</form>
+<hr><div >
+<div class="container">
+    <ul class="unordered-list">
+        {% for log in logs %}
+          {% if log.mitre_technique_id != null and log.event_data.CommandLine != null %} <!--event id değerleri 1 olan-->
+            <li class="log">
+            <ul class="unordered-list">
+                <li>Host Adı : {{log.host.name}}</li>
+                <li>Saat : {{log.timestamp}}</li>
+                <li>Event ID : {{log.event_id}}</li>
+                <li>Proses ID : {{log.process_id}}</li>
+                <li>Proses Adı : {{log.event_data.Image}}</li>
+                <li>Log Adı : {{log.log_name}}</li>
+                <li>Komut Satırı : <q><em>{{log.event_data.CommandLine}}</em></q></li>
+                <li class="list-group-item list-group-item-danger">Mitre Teknik Id :{{log.mitre_technique_id}}</li>
+                <li class="list-group-item list-group-item-danger">Mitre Teknik Adı :{{log.mitre_technique_name}}</li>
+
+            </ul>
+            </li>
+
+          {% elif log.powershell.message.total != null %}
+              <li class="log">
+               <ul class="unordered-list">
+                <li>Host Adı : {{log.host.name}}</li>
+                <li>Saat : {{log.timestamp}}</li>
+                <li>Event ID : {{log.event_id}}</li>
+                <li>Proses ID : {{log.process_id}}</li>
+                <li>Proses Adı : {{log.event_data.Image}}</li>
+                <li>Log Adı : {{log.log_name}}</li>
+                <li>Komut Satırı : <q><em>{{log.event_data.CommandLine}}</em></q></li>
+                <li>powershell Script Block Text : <q><em>{{log.powershell.scriptblock.text}}</em></q></li>
+                <li>Powershell Script Block İd : <q><em>{{log.powershell.scriptblock.id}}</em></q></li>
+                <li>powershell Message Total : <q><em>{{log.powershell.message.total}}</em></q></li>
+                <li>powershell Script Block Number: <q><em>{{log.powershell.message.number}}</em></q></li>
+             </ul>
+            </li>
+
+          {%elif log.event_data.CommandLine == null and log.mitre_technique_id != null %} <!--event id 1 olmayıp mitre degeri alan-->
+               <li class="log">
+               <ul class="unordered-list">
+                <li>Host Adı : {{log.host.name}}</li>
+                <li>Saat : {{log.timestamp}}</li>
+                <li>Event ID : {{log.event_id}}</li>
+                <li>Proses ID : {{log.process_id}}</li>
+                <li>Proses Adı : {{log.event_data.Image}}</li>
+                <li>Log Adı : {{log.log_name}}</li>                
+                <li class="list-group-item list-group-item-danger">Mitre Teknik Id :{{log.mitre_technique_id}}</li>
+                <li class="list-group-item list-group-item-danger">Mitre Teknik Adı :{{log.mitre_technique_name}}</li>
+             </ul>
+            </li>
+
+          {%else%}
+  
+
+          {% endif %}
+       
+        {% endfor %}
+    </ul>
+</div>
+
+<!--pagination-->
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="1">1</a></li>
+    <li class="page-item"><a class="page-link" href="2">2</a></li>
+    <li class="page-item"><a class="page-link" href="3">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="/monitoring/4" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}

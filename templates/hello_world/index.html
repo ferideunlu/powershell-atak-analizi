@@ -1,0 +1,26 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello World | Index</title>
+</head>
+
+<body>
+    <h2>Hello World</h2>
+    <h4>Getting data from elasticsearch</h4>
+    <ol>
+        {% for log in logs %}
+        <li>Timestamp --> {{log.timestamp}} <br>
+            Process ID --> {{log.process_id}} <br>
+            Log name --> {{log.log_name}} <br>
+            Message --> <q><em>{{log.message}}</em></q> <br>
+            Event ID --> {{log.event_id}} <br>
+            Event Data:Image --> Image: <q>{{log.event_data.Image}}</q>
+        </li>
+        {% endfor %}
+    </ol>
+</body>
+
+</html>

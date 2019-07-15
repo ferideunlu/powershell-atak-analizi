@@ -1,0 +1,93 @@
+{% extends 'hello_world/layout.html' %}
+
+{% block title %}Güvenlik Raporu{% endblock %}
+
+{% block content %}
+<h3>Güvenlik Raporu</h3>
+<hr>
+<form>
+    <div class="form-group" >
+        <div class="row">
+            <label for="date" class="label label-primary">Tarihi Seç</label>
+            <div class="col-md-2">
+                <input type="date" class="form-control">
+            </div>
+
+
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-outline-primary" value="Filtrele">
+            </div>
+        </div>
+    </div>
+</form>
+<hr>
+<div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Güvenlik Raporu </h3>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Teknik Adi</th>                
+                <th>Teknik ID</th>
+                <th>Tespit Edilen Teknik Sayisi</th>
+               
+                <th>Host Adi</th>
+            </tr>
+            </thead>
+
+          
+            <tbody>
+                <tr>
+                    <td>Credential Dumping</td>
+                    <td>T1003</td>
+                    <td>{{logsayisi1003}}</td>                    
+                    
+                    <td>FERIDE</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>Powershell </td>
+                    <td>T1086</td>
+                    <td>{{logsayisi1086}}</td>                    
+                   
+                    <td>FERIDE</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>Obfuscation Files Or Information</td>
+                    <td>T1027</td>
+                    <td>{{logsayisi1027}}</td>                    
+                   
+                    <td>FERIDE</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>Create_Account</td>
+                    <td>T1136</td>
+                    <td>{{logsayisi1136}}</td>                    
+                   
+                    <td>FERIDE</td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+</div>
+
+<!--pagination-->
+
+<hr>
+<div>
+<a href="../raporpdf/" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Rapor Çıkar</a>
+</div>
+
+
+
+{% endblock %}

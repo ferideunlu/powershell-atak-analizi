@@ -1,0 +1,325 @@
+{
+  "query": {
+    "bool": {
+      "minimum_should_match": 1,
+      "should": [
+        {
+          "bool": {
+            "must": [
+              {
+                "match_phrase": {
+                  "log_name": "Microsoft-Windows-Sysmon/Operational"
+                }
+              },
+              {
+                "match": {
+                  "event_id": {
+                    "query": 3
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "match_phrase": {
+            "log_name": "Microsoft-Windows-PowerShell/Operational"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+{
+  "query": {
+    "bool": {
+      "minimum_should_match": 1,
+      "should": [
+        {
+          "bool": {
+            "must": [
+              {
+                "match_phrase": {
+                  "log_name": "Microsoft-Windows-Sysmon/Operational"
+                }
+              },
+              {
+                "match": {
+                  "event_id": {
+                    "query": 3
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "bool":{
+            "must":[
+                {
+                  "match_phrase": {
+                  "log_name": "Microsoft-Windows-PowerShell/Operational"
+                    }
+                },
+                {
+                "match": {
+                  "event_id": {
+                    "query": 4104
+                  }
+                }
+              }
+              ]
+          }
+        }
+        
+
+      ]
+    }
+  }
+}
+
+---------------------------------------------------------------------------------------------------------------------
+{
+  "query": {
+    "bool": {
+      "minimum_should_match": 1,
+      "should": [
+        {
+          "bool": {
+            "must": [
+              {
+                "match_phrase": {
+                  "log_name": "Microsoft-Windows-Sysmon/Operational"
+                }
+              },
+              {
+                "match": {
+                  "event_id": {
+                    "query": 3
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "bool": {
+            "must": [
+              {
+                "match_phrase": {
+                  "log_name": "Microsoft-Windows-PowerShell/Operational"
+                }
+              },
+              {
+                "match": {
+                  "event_id": {
+                    "query": 4104
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+-----------------------------------------------------------------------------------------------------------------------
+olan sorgu bu sakın unutma.
+
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "bool" : 
+          {
+            "must":[
+              {
+                "match_phrase": {
+                "log_name": "Microsoft-Windows-Sysmon/Operational"
+                }  
+              },
+              {
+                "match": {
+                "event_id": {
+                "query": 1
+              }
+             }
+            }
+          ]  
+          }
+          
+        },
+        {
+          "bool":{
+            "must": [
+              {
+                "match_phrase": {
+                "log_name": "Microsoft-Windows-PowerShell/Operational"
+                 }
+              },
+              {
+                "match": {
+                "event_id": {
+                "query": 4104
+                }
+               }
+              }
+            ]
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  }
+}
+
+-------------------------------------------------------------------------------------
+mitre t1003
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "type": "wineventlog"
+          }
+        },
+        {
+          "term": {
+            "log_name": "Microsoft-Windows-Sysmon/Operational"
+          }
+        },
+        {
+          "bool": {
+            "should": {
+              "bool": {
+                "must": {
+                  "match": {
+                    "mitre_technique_id": {
+                      "query": "T1003",
+                      "type": "phrase"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+---------------------------------------------------------------
+time ranking 
+
+
+{
+  "range": {
+    "@timestamp": {
+      "gte": "2019-04-01 00:00:00",
+      "lt": "2019-05-10 00:00:00"
+    }
+  }
+}
+
+
+---------------------------------------------
+
+{
+  "range": {
+    "@timestamp": {
+      "gte": "2019-04-01 00:00:00.000",
+      "lt": "2019-05-10 00:00:00.000"
+    }
+  }
+}
+
+---------------------------------
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "type": "wineventlog"
+          }
+        },
+        {
+          "term": {
+            "log_name": "Microsoft-Windows-Sysmon/Operational"
+          }
+        },
+        {
+          "bool": {
+            "should": {
+              "bool": {
+                "must": {
+                  "match": {
+                    "mitre_technique_id": {
+                      "query": "T1003"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+---------------------------------------------------------------------------------
+        {
+            'bool': {
+                'must': [
+                    {'term': {'type': 'wineventlog'}},
+                    {'term': {'log_name': 'Microsoft-Windows-Sysmon/Operational'}},
+                    {
+                        'bool': {
+                            'should': [
+                                {
+                                    'bool': {
+                                        'must': {'match': {'event_id': 13}} # Registry value set
+                                        # 'must': [
+                                        #     {'match': {'event_id': 13}}, # Registry value set
+                                        #     {'match_phrase_prefix': {
+                                        #         # 'message': 'TargetImage: C:\\Windows\\system32\\lsass.exe'
+                                        #         'message': 'Image: C:\python\python371\python.exe'
+                                        #     }}
+                                        # ]
+                                    }
+                                },
+                                {
+                                    'bool': {
+                                        'must': [
+                                            {'match': {'event_id': 10}}, # Process access
+                                            # {'match': {'event_id': 2}},
+                                            {'match_phrase_prefix': {
+                                                'message': 'TargetImage: C:\\Windows\\system32\\lsass.exe'
+                                                # 'message': 'Image: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
+                                            }}
+                                        ]
+                                    }
+                                },
+                                {
+                                    'bool': {
+                                        'must': [
+                                            {'match': {'event_id': 1}} # Process access
+                                                                       
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }

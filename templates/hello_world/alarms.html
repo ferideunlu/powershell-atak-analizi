@@ -1,0 +1,33 @@
+{% extends 'hello_world/layout.html' %}
+
+{% block title %}Alarms{% endblock %}
+
+{% block content %}
+<h3>Uyarılar</h3>
+<form>
+    <div class="form-group">
+        <div class="row">
+            <label for="date" class="control-label col-md-1">Tarihi Sec</label>
+            <div class="col-md-2">
+                <input type="date" class="form-control">
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <ol>
+        {% for log in logs %}
+        <li><span class="text-danger"><i class="fas fa-bolt"></i> Uyarı</span> <br>
+            Host Adı : {{log.host.name}} <br>
+            Saat --> {{log.timestamp}} <br>
+            Event ID --> {{log.event_id}} <br>
+            Proses ID --> {{log.process_id}} <br>
+            Proses Adı --> <q>{{log.event_data.Image}}</q> <br>
+            Log Adı --> {{log.log_name}} <br>
+            Mesaj --> <q><em>{{log.message}}</em></q> <br>
+            
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% endblock %}
